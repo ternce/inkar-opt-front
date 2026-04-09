@@ -921,18 +921,20 @@ export function PriceListsTab({ formatCode, onPriceFormatsChanged }: PriceListsT
                 </SelectContent>
               </Select>
               {selectedDistributors.length ? (
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
                   {selectedDistributors.map((code) => {
                     const name = DISTRIBUTORS.find((d) => d.code === code)?.name;
+                    const label = `${code}${name ? ` — ${name}` : ''}`;
                     return (
                       <span
                         key={code}
-                        className="inline-flex items-center gap-2 text-xs px-2 py-1 rounded border bg-gray-50"
+                        title={label}
+                        className="inline-flex shrink-0 max-w-64 min-w-0 items-center gap-2 text-xs px-2 py-1 rounded border bg-gray-50 whitespace-nowrap"
                       >
-                        {code}{name ? ` — ${name}` : ''}
+                        <span className="min-w-0 truncate">{label}</span>
                         <button
                           type="button"
-                          className="text-gray-500 hover:text-gray-900"
+                          className="shrink-0 text-gray-500 hover:text-gray-900"
                           onClick={() => setSelectedDistributors((prev) => prev.filter((x) => x !== code))}
                         >
                           ×
