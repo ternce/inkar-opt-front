@@ -306,6 +306,13 @@ export function PriceListsTab({ formatCode, onPriceFormatsChanged }: PriceListsT
   const [distributorToAdd, setDistributorToAdd] = useState<string>(PHCENTER_DEFAULT_DISTRIBUTORS[0] ?? '4');
   const [distributorFilter, setDistributorFilter] = useState('');
 
+  const handleDistributorPick = (value: string) => {
+    setDistributorToAdd(value);
+    const code = value.trim();
+    if (!code) return;
+    setSelectedDistributors((prev) => (prev.includes(code) ? prev : [...prev, code]));
+  };
+
   const [excelFile, setExcelFile] = useState<File | null>(null);
   const [newPriceFormatName, setNewPriceFormatName] = useState<string>('');
   const [productsView, setProductsView] = useState<ImportedProductRow[] | null>(null);
@@ -884,7 +891,7 @@ export function PriceListsTab({ formatCode, onPriceFormatsChanged }: PriceListsT
             </div>
 
             <div className="w-72">
-              <Select value={distributorToAdd} onValueChange={setDistributorToAdd}>
+              <Select value={distributorToAdd} onValueChange={handleDistributorPick}>
                 <SelectTrigger>
                   <SelectValue placeholder="Добавить дистрибьютора" />
                 </SelectTrigger>
@@ -895,19 +902,6 @@ export function PriceListsTab({ formatCode, onPriceFormatsChanged }: PriceListsT
                       value={distributorFilter}
                       onChange={(e) => setDistributorFilter(e.target.value)}
                     />
-                    <div className="mt-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => {
-                          const code = distributorToAdd.trim();
-                          if (!code) return;
-                          setSelectedDistributors((prev) => (prev.includes(code) ? prev : [...prev, code]));
-                        }}
-                      >
-                        Добавить
-                      </Button>
-                    </div>
                   </div>
                   {DISTRIBUTORS.filter((d) => {
                     const q = distributorFilter.trim().toLowerCase();
@@ -948,6 +942,7 @@ export function PriceListsTab({ formatCode, onPriceFormatsChanged }: PriceListsT
           </div>
         </div>
         <div className="flex items-center gap-2">
+          {isLoading ? <div className="text-sm text-gray-600 px-2">Загрузка...</div> : null}
           <Button variant="outline" size="sm" onClick={loadPriceLists} disabled={isLoading}>
             <RefreshCw className="h-4 w-4 mr-2" />
             Обновить данные

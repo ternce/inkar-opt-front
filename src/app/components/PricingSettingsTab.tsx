@@ -178,6 +178,8 @@ export function PricingSettingsTab({ formatCode, onSaved }: PricingSettingsTabPr
         <h3 className="text-sm font-semibold text-gray-900 mb-4">
           Основные параметры ценообразования
         </h3>
+
+        {isLoading ? <div className="text-sm text-gray-600">Загрузка...</div> : null}
         
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">

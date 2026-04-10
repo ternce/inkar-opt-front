@@ -210,7 +210,7 @@ export function AnalyticsTab({ formatCode }: AnalyticsTabProps) {
           </ResponsiveContainer>
         </div>
 
-        {isLoading ? <div className="mt-4 text-sm text-gray-600">Загрузка…</div> : null}
+        {isLoading ? <div className="mt-4 text-sm text-gray-600">Загрузка...</div> : null}
       </div>
 
       {/* Client Analytics Table */}
